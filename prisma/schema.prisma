@@ -14,7 +14,9 @@ model User {
   password_hash String
   created_at    DateTime @default(now())
 
-  checkIns CheckIn[]
+  checkIns               CheckIn[]
+  UserHospitalConexion   UserHospitalConexion[]
+  UserInternshipConexion UserInternshipConexion[]
 
   @@map("users")
 }
@@ -25,9 +27,23 @@ model Hospital {
   latitude  Decimal
   longitude Decimal
 
-  internship Internship[]
+  internship           Internship[]
+  UserHospitalConexion UserHospitalConexion[]
 
   @@map("hospitals")
+}
+
+model UserHospitalConexion {
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  hospital    Hospital @relation(fields: [hospital_id], references: [id])
+  hospital_id String
+
+  created_at DateTime @default(now())
+
+  @@id([user_id, hospital_id])
+  @@map("user_hospital_conexion")
 }
 
 model CheckIn {
@@ -52,7 +68,21 @@ model Internship {
   hospital    Hospital @relation(fields: [hospital_id], references: [id])
   hospital_id String
 
-  checkIns CheckIn[]
+  checkIns               CheckIn[]
+  UserInternshipConexion UserInternshipConexion[]
 
   @@map("internships")
+}
+
+model UserInternshipConexion {
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  internship    Internship @relation(fields: [internship_id], references: [id])
+  internship_id String
+
+  created_at DateTime @default(now())
+
+  @@id([user_id, internship_id])
+  @@map("user_internship_conexion")
 }

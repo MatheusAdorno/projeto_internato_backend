@@ -20,6 +20,15 @@ CREATE TABLE "hospitals" (
 );
 
 -- CreateTable
+CREATE TABLE "user_hospital_conexion" (
+    "user_id" TEXT NOT NULL,
+    "hospital_id" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "user_hospital_conexion_pkey" PRIMARY KEY ("user_id","hospital_id")
+);
+
+-- CreateTable
 CREATE TABLE "check_ins" (
     "id" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -40,8 +49,23 @@ CREATE TABLE "internships" (
     CONSTRAINT "internships_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "user_internship_conexion" (
+    "user_id" TEXT NOT NULL,
+    "internship_id" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "user_internship_conexion_pkey" PRIMARY KEY ("user_id","internship_id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
+-- AddForeignKey
+ALTER TABLE "user_hospital_conexion" ADD CONSTRAINT "user_hospital_conexion_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "user_hospital_conexion" ADD CONSTRAINT "user_hospital_conexion_hospital_id_fkey" FOREIGN KEY ("hospital_id") REFERENCES "hospitals"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "check_ins" ADD CONSTRAINT "check_ins_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -51,3 +75,9 @@ ALTER TABLE "check_ins" ADD CONSTRAINT "check_ins_internship_id_fkey" FOREIGN KE
 
 -- AddForeignKey
 ALTER TABLE "internships" ADD CONSTRAINT "internships_hospital_id_fkey" FOREIGN KEY ("hospital_id") REFERENCES "hospitals"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "user_internship_conexion" ADD CONSTRAINT "user_internship_conexion_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "user_internship_conexion" ADD CONSTRAINT "user_internship_conexion_internship_id_fkey" FOREIGN KEY ("internship_id") REFERENCES "internships"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
