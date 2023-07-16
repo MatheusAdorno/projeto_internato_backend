@@ -1,10 +1,7 @@
 import { Internship, Prisma } from '@prisma/client'
 
 export interface InternshipsRepository {
-  create(
-    data: Prisma.InternshipUncheckedCreateInput,
-    user_id: string,
-  ): Promise<Internship>
+  create(data: Prisma.InternshipUncheckedCreateInput): Promise<Internship>
   findById(id: string): Promise<Internship | null>
   searchMany(
     query: string | null,

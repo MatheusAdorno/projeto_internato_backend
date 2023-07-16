@@ -25,20 +25,17 @@ export class CreateInternshipService {
     hospital_id,
     user_id,
   }: CreateInternshipServiceRequest): Promise<CreateInternshipServiceResponse> {
-    const internship = await this.internshipsRepository.create(
-      {
-        title,
-        description,
-        hospital_id,
-      },
-      user_id,
-    )
+    const internship = await this.internshipsRepository.create({
+      title,
+      description,
+      hospital_id,
+    })
 
-    const internship_id = internship.id
+    const internshipId = internship.id
 
     await this.userInternshipConexionRepository.create({
       user_id,
-      internship_id,
+      internship_id: internshipId,
     })
 
     return {

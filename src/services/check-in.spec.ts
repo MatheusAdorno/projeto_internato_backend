@@ -30,15 +30,12 @@ describe('CheckIn Service', () => {
       longitude: -46.7178322,
     })
 
-    await internshipsRepository.create(
-      {
-        id: 'internship-01',
-        hospital_id: hospital.id,
-        title: 'Estágio de Clínica Médica',
-        description: '',
-      },
-      'user-01',
-    )
+    await internshipsRepository.create({
+      id: 'internship-01',
+      hospital_id: hospital.id,
+      title: 'Estágio de Clínica Médica',
+      description: '',
+    })
 
     vi.useFakeTimers()
   })
