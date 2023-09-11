@@ -7,16 +7,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  GENERAL_ADMIN
+  UNIVERSITY_ADMIN
+  HOSPITAL_ADMIN
+  PRECEPTOR
+  STUDENT
+}
+
 model User {
   id            String   @id @default(uuid())
   name          String
   email         String   @unique
   password_hash String
+  role          Role     @default(STUDENT)
+  class         Class?   @relation(fields: [classId], references: [id])
   created_at    DateTime @default(now())
 
   checkIns               CheckIn[]
   UserHospitalConexion   UserHospitalConexion[]
   UserInternshipConexion UserInternshipConexion[]
+  Internship             Internship[]
+  classId                String?
+  Group                  Group?                   @relation(fields: [groupId], references: [id])
+  groupId                String?
+  userActivity           ActivityImplementation[] @relation(name: "user")
+  preceptorActivity      ActivityImplementation[] @relation(name: "preceptor")
 
   @@map("users")
 }
@@ -24,11 +40,14 @@ model User {
 model Hospital {
   id        String  @id @default(uuid())
   name      String
+  address   String
   latitude  Decimal
   longitude Decimal
 
-  internship           Internship[]
-  UserHospitalConexion UserHospitalConexion[]
+  internship             Internship[]
+  UserHospitalConexion   UserHospitalConexion[]
+  HospitalArea           HospitalArea[]
+  ActivityImplementation ActivityImplementation[]
 
   @@map("hospitals")
 }
@@ -65,13 +84,115 @@ model Internship {
   title       String
   description String?
 
+  period    Period @relation(fields: [period_id], references: [id])
+  period_id String
+
+  cicle    Cicle  @relation(fields: [cicle_id], references: [id])
+  cicle_id String
+
+  hospitalArea    HospitalArea @relation(fields: [hospitalArea_id], references: [id])
+  hospitalArea_id String
+
+  preceptor    User?   @relation(fields: [preceptor_id], references: [id])
+  preceptor_id String?
+
   hospital    Hospital @relation(fields: [hospital_id], references: [id])
   hospital_id String
 
   checkIns               CheckIn[]
   UserInternshipConexion UserInternshipConexion[]
+  ActivityImplementation ActivityImplementation[]
 
   @@map("internships")
+}
+
+model Class {
+  id          String  @id @default(uuid())
+  title       String
+  description String?
+  groups      Group[]
+
+  User User[]
+}
+
+model Group {
+  id          String     @id @default(uuid())
+  title       String
+  description String?
+  subgroups   Subgroup[]
+
+  class    Class  @relation(fields: [class_id], references: [id])
+  class_id String
+
+  User User[]
+}
+
+model Subgroup {
+  id          String  @id @default(uuid())
+  title       String
+  description String?
+  group       Group   @relation(fields: [group_id], references: [id])
+  group_id    String
+}
+
+model Period {
+  id          String       @id @default(uuid())
+  title       String
+  description String?
+  Internship  Internship[]
+}
+
+model Cicle {
+  id          String       @id @default(uuid())
+  title       String
+  description String?
+  Internship  Internship[]
+}
+
+model ActivityImplementation {
+  id String @id @default(uuid())
+
+  activity    Activity @relation(fields: [activity_id], references: [id])
+  activity_id String
+
+  dateStart DateTime
+  dateEnd   DateTime
+
+  hourStart DateTime
+  hourEnd   DateTime
+
+  user    User   @relation(fields: [user_id], references: [id], name: "user")
+  user_id String
+
+  internship    Internship @relation(fields: [internship_id], references: [id])
+  internship_id String
+
+  hospital    Hospital @relation(fields: [hospital_id], references: [id])
+  hospital_id String
+
+  hospitalArea    HospitalArea @relation(fields: [hospitalArea_id], references: [id])
+  hospitalArea_id String
+
+  preceptor    User   @relation(fields: [preceptor_id], references: [id], name: "preceptor")
+  preceptor_id String
+}
+
+model Activity {
+  id                     String                   @id @default(uuid())
+  title                  String
+  description            String?
+  ActivityImplementation ActivityImplementation[]
+}
+
+model HospitalArea {
+  id          String  @id @default(uuid())
+  title       String
+  description String?
+
+  hospital               Hospital                 @relation(fields: [hospital_id], references: [id])
+  hospital_id            String
+  Internship             Internship[]
+  ActivityImplementation ActivityImplementation[]
 }
 
 model UserInternshipConexion {

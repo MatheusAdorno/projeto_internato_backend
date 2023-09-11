@@ -7,6 +7,10 @@ interface CreateInternshipServiceRequest {
   description: string | null
   hospital_id: string
   user_id: string
+  cicle_id: string
+  hospitalArea_id: string
+  period_id: string
+  preceptor_id: string | null
 }
 
 interface CreateInternshipServiceResponse {
@@ -24,11 +28,19 @@ export class CreateInternshipService {
     description,
     hospital_id,
     user_id,
+    cicle_id,
+    hospitalArea_id,
+    period_id,
+    preceptor_id,
   }: CreateInternshipServiceRequest): Promise<CreateInternshipServiceResponse> {
     const internship = await this.internshipsRepository.create({
       title,
       description,
       hospital_id,
+      cicle_id,
+      hospitalArea_id,
+      period_id,
+      preceptor_id,
     })
 
     const internshipId = internship.id

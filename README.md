@@ -1,1 +1,1 @@
-# Projeto Gerencimento Alunos Internato
+# Projeto Gerenciamento Alunos Internato

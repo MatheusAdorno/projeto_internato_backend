@@ -9,6 +9,7 @@ export class InMemoryHospitalsRepository implements HospitalsRepository {
     const hospital = {
       id: data.id ?? randomUUID(),
       name: data.name,
+      address: data.address,
       latitude: new Prisma.Decimal(data.latitude.toString()),
       longitude: new Prisma.Decimal(data.longitude.toString()),
     }

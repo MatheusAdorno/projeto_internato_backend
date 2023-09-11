@@ -11,6 +11,7 @@ export class InMemoryInternshipsRepository implements InternshipsRepository {
       title: data.title,
       description: data.description ?? null,
       hospital_id: data.hospital_id,
+      
     }
 
     this.items.push(internship)

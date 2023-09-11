@@ -14,6 +14,7 @@ describe('Create Hospital Service', () => {
   it('should be able to create a hospital', async () => {
     const { hospital } = await sut.execute({
       name: 'Einstein',
+      address: 'Avenida Albert Einstein',
       latitude: -23.5999746,
       longitude: -46.7178322,
     })

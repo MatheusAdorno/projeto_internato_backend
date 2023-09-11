@@ -14,12 +14,14 @@ describe('Search Hospitals Service', () => {
   it('should be able to search for hospitals registered', async () => {
     await hospitalsRepository.create({
       name: 'Einstein',
+      address: 'Avenida Albert Einstein',
       latitude: -23.5999746,
       longitude: -46.7178322,
     })
 
     await hospitalsRepository.create({
       name: 'Hospital das Clínicas',
+      address: 'Avenida Hospital das Clínicas',
       latitude: -23.5577989,
       longitude: -46.6724347,
     })
@@ -39,12 +41,14 @@ describe('Search Hospitals Service', () => {
   it('should be able to search for hospitals by name', async () => {
     await hospitalsRepository.create({
       name: 'Einstein',
+      address: 'Avenida Albert Einstein',
       latitude: -23.5999746,
       longitude: -46.7178322,
     })
 
     await hospitalsRepository.create({
       name: 'Hospital das Clínicas',
+      address: 'Avenida Hospital das Clínicas',
       latitude: -23.5577989,
       longitude: -46.6724347,
     })
@@ -62,6 +66,7 @@ describe('Search Hospitals Service', () => {
     for (let i = 1; i <= 22; i++) {
       await hospitalsRepository.create({
         name: `Einstein - ${i}`,
+        address: 'Avenida Albert Einstein',
         latitude: -23.5999746,
         longitude: -46.7178322,
       })

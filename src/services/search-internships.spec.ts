@@ -21,12 +21,18 @@ describe('Search Internships Service', () => {
       title: 'Clínica Médica',
       description: '',
       hospital_id: 'hospital-01',
+      period_id: 'period-01',
+      cicle_id: 'cicle-01',
+      hospitalArea_id: 'hospitalArea-01',
     })
 
     await internshipsRepository.create({
       title: 'Cirurgia Geral',
       description: '',
       hospital_id: 'hospital-02',
+      period_id: 'period-01',
+      cicle_id: 'cicle-01',
+      hospitalArea_id: 'hospitalArea-01',
     })
   })
 
@@ -78,6 +84,9 @@ describe('Search Internships Service', () => {
       title: 'Clínica Médica',
       description: '',
       hospital_id: 'hospital-02',
+      period_id: 'period-02',
+      cicle_id: 'cicle-02',
+      hospitalArea_id: 'hospitalArea-02',
     })
 
     const { internships } = await sut.execute({
@@ -98,6 +107,9 @@ describe('Search Internships Service', () => {
       title: 'Clínica Médica',
       description: '',
       hospital_id: 'hospital-01',
+      period_id: 'period-01',
+      cicle_id: 'cicle-01',
+      hospitalArea_id: 'hospitalArea-01',
     })
 
     await userInternshipConexionsRepository.create({
@@ -124,6 +136,9 @@ describe('Search Internships Service', () => {
         title: `Clínica Médica - ${i}`,
         description: '',
         hospital_id: 'hospital-01',
+        period_id: 'period-01',
+        cicle_id: 'cicle-01',
+        hospitalArea_id: 'hospitalArea-01',
       })
     }
 
