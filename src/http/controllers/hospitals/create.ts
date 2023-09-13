@@ -8,18 +8,19 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     latitude: z.number().refine((value) => {
       return Math.abs(value) <= 90
     }),
+    address: z.string(),
     longitude: z.number().refine((value) => {
       return Math.abs(value) <= 180
     }),
   })
 
-  const { name, latitude, longitude } = createHospitalBodySchema.parse(
+  const { name, address, latitude, longitude } = createHospitalBodySchema.parse(
     request.body,
   )
 
   const createHospitalService = makeCreateHospitalService()
 
-  await createHospitalService.execute({ name, latitude, longitude })
+  await createHospitalService.execute({ name, address, latitude, longitude })
 
   return reply.status(201).send()
 }
