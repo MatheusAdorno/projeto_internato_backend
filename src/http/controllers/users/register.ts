@@ -17,13 +17,9 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
   )
 
   try {
-    if (password !== confirmPassword) {
-      throw new PasswordDoesNotMatchError()
-    }
-
     const registerService = makeRegisterService()
 
-    await registerService.execute({ name, email, password })
+    await registerService.execute({ name, email, password, confirmPassword })
   } catch (err) {
     if (err instanceof UserAlreadyExistsError) {
       return reply.status(409).send({ message: err.message })

@@ -2,11 +2,13 @@ import { UsersRepository } from '@/repositories/users-repository'
 import { hash } from 'bcryptjs'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 import { User } from '@prisma/client'
+import { PasswordDoesNotMatchError } from './errors/password-does-not-match-error'
 
 interface RegisterServiceRequest {
   name: string
   email: string
   password: string
+  confirmPassword: string
 }
 
 interface RegisterServiceResponse {
@@ -20,7 +22,12 @@ export class RegisterService {
     name,
     email,
     password,
+    confirmPassword,
   }: RegisterServiceRequest): Promise<RegisterServiceResponse> {
+    if (password !== confirmPassword) {
+      throw new PasswordDoesNotMatchError()
+    }
+
     const password_hash = await hash(password, 6)
 
     const userWithSameEmail = await this.usersRepository.findByEmail(email)
