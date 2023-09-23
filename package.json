@@ -52,7 +52,6 @@
     "fastify": "4.17.0",
     "fastify-swagger": "5.2.0",
     "fastify-swagger-ui": "1.0.1",
-    "minimatch": "9.0.3",
     "zod": "3.21.4"
   }
 }

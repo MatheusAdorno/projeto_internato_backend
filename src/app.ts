@@ -28,44 +28,44 @@ app.register(fastifyJwt, {
   },
 })
 
-app.register(require('@fastify/swagger-ui'), {
-  routePrefix: '/documentation',
-  uiConfig: {
-    docExpansion: 'full',
-    deepLinking: false,
-  },
-  uiHooks: {
-    onRequest: function (request, reply, next) {
-      next()
-    },
-    preHandler: function (request, reply, next) {
-      next()
-    },
-  },
-  staticCSP: true,
-  transformStaticCSP: (header) => header,
-  transformSpecification: (swaggerObject, request, reply) => {
-    if (request.url === '/users') {
-      // Acesse o objeto de definição da rota
-      const routeDefinition = swaggerObject.paths['/users']
+// app.register(require('@fastify/swagger-ui'), {
+//   routePrefix: '/documentation',
+//   uiConfig: {
+//     docExpansion: 'full',
+//     deepLinking: false,
+//   },
+//   uiHooks: {
+//     onRequest: function (request, reply, next) {
+//       next()
+//     },
+//     preHandler: function (request, reply, next) {
+//       next()
+//     },
+//   },
+//   staticCSP: true,
+//   transformStaticCSP: (header) => header,
+//   transformSpecification: (swaggerObject, request, reply) => {
+//     if (request.url === '/users') {
+//       // Acesse o objeto de definição da rota
+//       const routeDefinition = swaggerObject.paths['/users']
 
-      // Modifique o pedido para a rota
-      routeDefinition.post.parameters = [
-        {
-          in: 'query',
-          name: 'customParam',
-          description: 'Custom query parameter',
-          required: true,
-          schema: {
-            type: 'string',
-          },
-        },
-      ]
-    }
-    return swaggerObject
-  },
-  transformSpecificationClone: true,
-})
+//       // Modifique o pedido para a rota
+//       routeDefinition.post.parameters = [
+//         {
+//           in: 'query',
+//           name: 'customParam',
+//           description: 'Custom query parameter',
+//           required: true,
+//           schema: {
+//             type: 'string',
+//           },
+//         },
+//       ]
+//     }
+//     return swaggerObject
+//   },
+//   transformSpecificationClone: true,
+// })
 
 app.register(fastifyCookie)
 
