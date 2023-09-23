@@ -9,15 +9,15 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
     name: z.string(),
     email: z.string().email(),
     password: z.string().min(6),
-    confirmedPassword: z.string().min(6),
+    confirmPassword: z.string().min(6),
   })
 
-  const { name, email, password, confirmedPassword } = registerBodySchema.parse(
+  const { name, email, password, confirmPassword } = registerBodySchema.parse(
     request.body,
   )
 
   try {
-    if (password !== confirmedPassword) {
+    if (password !== confirmPassword) {
       throw new PasswordDoesNotMatchError()
     }
 
