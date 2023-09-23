@@ -19,7 +19,7 @@ export async function usersRoutes(app: FastifyInstance) {
   app.get('/me', { onRequest: [verifyJWt] }, profile)
 
   app.get(
-    '/cicles/search',
+    '/users/search',
     {
       onRequest: [verifyJWt],
     },
@@ -27,7 +27,7 @@ export async function usersRoutes(app: FastifyInstance) {
   )
 
   app.get(
-    '/cicles/search-preceptors',
+    '/users/search-preceptors',
     {
       onRequest: [verifyJWt],
     },
